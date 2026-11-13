@@ -487,8 +487,8 @@ async function parseAny(u8, name){
 }
 function decodeText(u8){
   let t = new TextDecoder('utf-8').decode(u8);
-  if(t.includes('�')){ try{ t = new TextDecoder('euc-kr').decode(u8); }catch(e){} }
-  return t.replace(/^﻿/,'');
+  if(t.includes('\uFFFD')){ try{ t = new TextDecoder('euc-kr').decode(u8); }catch(e){} }
+  return t.replace(/^\uFEFF/,'');
 }
 function parseCsv(t){
   const rows=[]; let row=[], cell='', q=false;
