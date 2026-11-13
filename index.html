@@ -19,10 +19,11 @@
   --color-slate:#557089;
   --color-mint:#2FA67A;      /* 절감(좋은 변화) */
   --color-line:rgba(43,50,59,.14);
-  --grid-red:linear-gradient(rgba(255,255,255,.09) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,rgba(255,255,255,.09) 1px,transparent 1px) 0 0/48px 48px;
-  --grid-cream:linear-gradient(rgba(215,38,47,.08) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,rgba(215,38,47,.08) 1px,transparent 1px) 0 0/48px 48px;
+  --grid-red:linear-gradient(color-mix(in srgb,var(--color-cream) 12%,transparent) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,color-mix(in srgb,var(--color-cream) 12%,transparent) 1px,transparent 1px) 0 0/48px 48px;
+  --grid-cream:linear-gradient(color-mix(in srgb,var(--color-red) 8%,transparent) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,color-mix(in srgb,var(--color-red) 8%,transparent) 1px,transparent 1px) 0 0/48px 48px;
   --display:"Jua","Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
   --body:"Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --space-1:4px; --space-2:8px; --space-3:16px; --space-4:24px; --space-5:32px; --space-6:40px; --space-9:72px;
   --r-sm:12px; --r-md:20px; --r-pill:999px;
 }
 *{box-sizing:border-box}
@@ -45,24 +46,39 @@ h1,h2,h3,.display{font-family:var(--display);font-weight:400;letter-spacing:-.01
 .pill-btn.red{background:var(--color-red);color:var(--color-cream)}
 
 /* ---------- 히어로 ---------- */
-.hero{background:var(--grid-red),var(--color-red);color:var(--color-cream);padding:110px 0 72px;min-height:88vh;display:flex;align-items:center;overflow:hidden}
+.hero{background:var(--grid-red),var(--color-red);color:var(--color-cream);padding:var(--space-9) 0;min-height:86vh;display:flex;align-items:center;overflow:hidden}
 .hero>.wrap{width:100%}
-.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
-@media(max-width:860px){.hero-grid{grid-template-columns:1fr}}
-.hero-logo{width:min(360px,80%);color:var(--color-cream);transform:rotate(-4deg);filter:drop-shadow(6px 6px 0 var(--color-red-deep))}
-.hero h1{font-size:clamp(40px,6vw,64px);line-height:1.1;margin:28px 0 14px}
-.hero p{font-size:17px;max-width:30em;margin:0;opacity:.92}
-.lock{display:inline-flex;gap:6px;align-items:center;margin-top:18px;font-size:13px;background:rgba(0,0,0,.14);padding:6px 12px;border-radius:var(--r-pill)}
+.hero-center{text-align:center;display:flex;flex-direction:column;align-items:center}
+.hero h1{font-size:clamp(36px,6vw,64px);line-height:1.1;margin:0 0 var(--space-5)}
+.cta{position:relative;display:inline-flex;align-items:center;gap:var(--space-3);background:var(--color-paper);color:var(--color-ink);border:3px solid var(--color-ink);border-radius:var(--r-pill);padding:var(--space-3) var(--space-6) var(--space-3) var(--space-4);cursor:pointer;box-shadow:6px 6px 0 var(--color-red-deep);transition:transform .12s,box-shadow .12s}
+.cta .tray{width:56px;height:auto;flex:none}
+.cta .cta-text{font-family:var(--display);font-size:clamp(26px,4vw,34px);line-height:1.1;text-align:left}
+.cta .cta-sub{display:block;font-family:var(--body);font-size:13px;color:var(--color-sub);margin-top:var(--space-1)}
+.cta:hover{transform:translate(-1px,-1px);box-shadow:7px 7px 0 var(--color-red-deep)}
+.cta:active{transform:translate(6px,6px);box-shadow:0 0 0 var(--color-red-deep)}
+.cta:focus-visible{outline:3px solid var(--color-mustard);outline-offset:var(--space-1)}
+.cta.over{background:var(--color-cream);transform:scale(1.03)}
+.cta .sticker{position:absolute;top:calc(-1 * var(--space-4));right:calc(-1 * var(--space-3));transform:rotate(8deg)}
+.hint{margin:var(--space-5) 0 0;font-size:14px;display:flex;flex-wrap:wrap;justify-content:center;gap:var(--space-2) var(--space-4)}
+.hint span{background:var(--color-red-deep);padding:var(--space-1) var(--space-3);border-radius:var(--r-pill)}
+.sticker{font-family:var(--display);background:var(--color-mustard);color:var(--color-ink);border:2.5px solid var(--color-ink);border-radius:var(--r-pill);padding:var(--space-1) var(--space-3);font-size:15px;box-shadow:3px 3px 0 var(--color-ink)}
+#err{margin-top:var(--space-4);max-width:560px;background:var(--color-paper);color:var(--color-red-deep);border:2.5px solid var(--color-ink);border-radius:var(--r-sm);padding:var(--space-3) var(--space-3);box-shadow:4px 4px 0 var(--color-red-deep);text-align:left}
 
-#drop{position:relative;background:var(--color-paper);color:var(--color-ink);border:3px dashed var(--color-ink);border-radius:var(--r-md);padding:40px 28px;text-align:center;cursor:pointer;transform:rotate(1.5deg);box-shadow:8px 8px 0 var(--color-red-deep);transition:transform .15s}
-#drop:hover,#drop.over{transform:rotate(0) scale(1.01)}
-#drop.over{background:#fff}
-#drop:focus-visible{outline:3px solid var(--color-mustard);outline-offset:4px}
-#drop .tray{width:96px;margin:0 auto 10px;display:block}
-#drop .display{font-size:24px}
-#drop .sticker{position:absolute;top:-22px;right:-14px;transform:rotate(10deg)}
-.sticker{font-family:var(--display);background:var(--color-mustard);color:var(--color-ink);border:2.5px solid var(--color-ink);border-radius:var(--r-pill);padding:4px 14px;font-size:15px;box-shadow:3px 3px 0 var(--color-ink)}
-#err{margin-top:22px;background:var(--color-paper);color:var(--color-red-deep);border:2.5px solid var(--color-ink);border-radius:var(--r-sm);padding:12px 16px;box-shadow:4px 4px 0 var(--color-red-deep)}
+/* ---------- 이렇게 보여요 ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-5)}
+@media(max-width:860px){.steps{grid-template-columns:1fr}}
+.step{position:relative;padding-top:var(--space-5)}
+.step .num{position:absolute;top:calc(-1 * var(--space-3));left:var(--space-4);width:40px;height:40px;border-radius:50%;background:var(--color-red);color:var(--color-cream);border:2.5px solid var(--color-ink);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:20px}
+.step p{margin:0 0 var(--space-3)}
+.ph{border:2px dashed var(--color-line);border-radius:var(--r-sm);padding:var(--space-3);color:var(--color-sub);font-size:13px}
+.ph .row{display:flex;justify-content:space-between;align-items:center;gap:var(--space-2);padding:var(--space-1) 0}
+.ph .bar{flex:1}
+.ph .dash{font-family:var(--display);font-size:18px;color:var(--color-sub)}
+.slots{display:grid;grid-template-columns:2fr 1fr;gap:var(--space-5);margin-top:var(--space-6)}
+@media(max-width:860px){.slots{grid-template-columns:1fr}}
+.slot{border:2.5px dashed var(--color-ink);border-radius:var(--r-md);padding:var(--space-4);min-height:120px;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--color-sub);background:color-mix(in srgb,var(--color-paper) 60%,transparent)}
+.logo-slots{display:flex;gap:var(--space-2);justify-content:center;flex-wrap:wrap;margin-top:var(--space-2)}
+.logo-slots i{width:56px;height:32px;border:2px dashed var(--color-line);border-radius:var(--space-2)}
 
 /* ---------- 체크무늬 띠 ---------- */
 .checker{height:44px;background:repeating-conic-gradient(var(--color-cream) 0 25%,var(--color-red) 0 50%) 0 0/44px 44px}
@@ -102,11 +118,11 @@ th,td{padding:9px 6px;border-bottom:1.5px dashed var(--color-line);text-align:le
 th{font-size:12.5px;color:var(--color-sub);font-weight:600}
 td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:7px;vertical-align:-1px;border:1.5px solid var(--color-ink)}
-.bar{height:10px;border-radius:6px;background:rgba(43,50,59,.08);overflow:hidden;min-width:60px}
+.bar{height:10px;border-radius:6px;background:color-mix(in srgb,var(--color-ink) 8%,transparent);overflow:hidden;min-width:60px}
 .bar>i{display:block;height:100%}
 tr.cat{cursor:pointer}
-tr.cat:hover{background:rgba(242,180,22,.15)}
-tr.cat.sel{background:rgba(242,180,22,.3)}
+tr.cat:hover{background:color-mix(in srgb,var(--color-mustard) 15%,transparent)}
+tr.cat.sel{background:color-mix(in srgb,var(--color-mustard) 30%,transparent)}
 .tag{font-size:11.5px;padding:1px 8px;border-radius:var(--r-pill);border:1.5px solid var(--color-line);color:var(--color-sub);white-space:nowrap}
 #daily svg text{font-size:11px;fill:var(--color-sub)}
 .cat-wrap{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
@@ -133,7 +149,7 @@ input[type=range]{width:100%;accent-color:var(--color-red)}
 .sim-side .mini .v{font-family:var(--display);font-size:22px}
 .sim-side .mini .l{font-size:12.5px;color:var(--color-sub)}
 .cmp .row{display:grid;grid-template-columns:72px 1fr 120px;gap:12px;align-items:center;margin:8px 0}
-.cmp .track{height:26px;background:rgba(255,255,255,.18);border-radius:var(--r-pill);overflow:hidden;border:2px solid var(--color-cream)}
+.cmp .track{height:26px;background:color-mix(in srgb,var(--color-cream) 18%,transparent);border-radius:var(--r-pill);overflow:hidden;border:2px solid var(--color-cream)}
 .cmp .track i{display:block;height:100%;border-radius:var(--r-pill);transition:width .35s ease}
 .cmp .n{font-family:var(--display);font-size:17px;text-align:right}
 
@@ -155,7 +171,7 @@ input[type=range]{width:100%;accent-color:var(--color-red)}
 .ch-stamp{margin:auto 0 16px;align-self:flex-start;background:var(--color-paper);border:2.5px dashed var(--color-ink);border-radius:16px;padding:8px 16px;transform:rotate(-2deg)}
 .ch-stamp .l{font-size:12.5px;color:var(--color-sub)}
 .ch-stamp .v{font-family:var(--display);font-size:30px;line-height:1.1}
-.ch-detail{font-size:13px;background:rgba(255,251,242,.85);border-radius:12px;padding:8px 16px;margin:-8px 0 16px}
+.ch-detail{font-size:13px;background:color-mix(in srgb,var(--color-paper) 85%,transparent);border-radius:12px;padding:8px 16px;margin:-8px 0 16px}
 .ch-detail ul{margin:0;padding-left:16px}
 .ch-actions{display:flex;gap:8px;flex-wrap:wrap}
 .ch-actions .pill-btn{font-size:15px;padding:8px 16px;box-shadow:3px 3px 0 var(--color-ink)}
@@ -184,8 +200,8 @@ input[type=range]{width:100%;accent-color:var(--color-red)}
 .toolbar .pill-btn{font-size:14px;padding:6px 16px;box-shadow:3px 3px 0 var(--color-ink)}
 .tx-wrap{max-height:540px;overflow:auto}
 .tx-wrap thead th{position:sticky;top:0;background:var(--color-paper);z-index:1}
-select{font:inherit;font-size:13.5px;padding:4px 6px;border:2px solid var(--color-ink);border-radius:8px;background:#fff;color:var(--color-ink)}
-.note{margin-top:18px;background:rgba(242,180,22,.18);border:2px dashed var(--color-ink);border-radius:var(--r-sm);padding:12px 16px;font-size:13.5px}
+select{font:inherit;font-size:13.5px;padding:4px 6px;border:2px solid var(--color-ink);border-radius:8px;background:var(--color-paper);color:var(--color-ink)}
+.note{margin-top:18px;background:color-mix(in srgb,var(--color-mustard) 18%,transparent);border:2px dashed var(--color-ink);border-radius:var(--r-sm);padding:12px 16px;font-size:13.5px}
 
 /* ---------- 바닥 ---------- */
 footer{background:var(--color-ink);color:var(--color-cream);padding:40px 0;text-align:center}
@@ -215,47 +231,42 @@ footer svg{height:30px;color:var(--color-cream);opacity:.9}
     <rect x="191" y="18" width="15" height="64" rx="1.5"/>
   </g>
 </svg>
-  <button class="pill-btn" id="topUpload" type="button">파일 넣기</button>
 </div>
 
 <header class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <svg class="hero-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 100" role="img" aria-label="OJI">
-  <defs><clipPath id="c2"><circle cx="50" cy="50" r="38"/></clipPath></defs>
-  <g fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round">
-    <circle cx="50" cy="50" r="40"/>
-    <g clip-path="url(#c2)" stroke-width="5">
-      <ellipse cx="50" cy="50" rx="18" ry="40"/>
-      <line x1="50" y1="8" x2="50" y2="92"/>
-      <line x1="8" y1="50" x2="92" y2="50"/>
-      <path d="M14 29 Q50 21 86 29"/>
-      <path d="M14 71 Q50 79 86 71"/>
-    </g>
-  </g>
-  <g fill="currentColor">
-    <path fill-rule="evenodd" d="M128 18c15 0 24 12 24 32s-9 32-24 32-24-12-24-32 9-32 24-32zm0 15c-5 0-8 6-8 17s3 17 8 17 8-6 8-17-3-17-8-17z"/>
-    <path d="M168 18h15v42c0 15-7 22-20 22h-6V68h4c5 0 7-3 7-9z"/>
-    <rect x="191" y="18" width="15" height="64" rx="1.5"/>
-  </g>
-</svg>
-      <h1>오늘의 지출은<br>얼마였을까요?</h1>
-      <p>여기 지출 내역 엑셀 파일을 넣으세요.</p>
-      <span class="lock">🔒 파일은 이 브라우저 안에서만 읽어요. 어디에도 올라가지 않아요.</span>
+  <div class="wrap hero-center">
+    <h1>오늘의 지출은<br>얼마였을까요?</h1>
+    <div id="drop" class="cta" tabindex="0" role="button" aria-label="지출 엑셀 넣기">
+      <span class="sticker">.xls · .xlsx · .csv</span>
+      <svg class="tray" viewBox="0 0 96 70" aria-hidden="true"><rect x="4" y="18" width="88" height="48" rx="8" fill="var(--color-red)" stroke="var(--color-ink)" stroke-width="3"/><rect x="18" y="4" width="60" height="36" rx="4" fill="var(--color-paper)" stroke="var(--color-ink)" stroke-width="3"/><path d="M28 16h40M28 26h28" stroke="var(--color-ink)" stroke-width="3" stroke-linecap="round"/><path d="M4 40h26l6 8h24l6-8h26" fill="none" stroke="var(--color-ink)" stroke-width="3" stroke-linejoin="round"/></svg>
+      <span class="cta-text"><span id="dropTitle">지출 엑셀 넣기</span><span class="cta-sub">눌러서 고르거나 여기로 끌어다 놓기</span></span>
+      <input type="file" id="file" accept=".xls,.xlsx,.csv" class="hidden">
     </div>
-    <div>
-      <div id="drop" tabindex="0" role="button" aria-label="거래내역 파일 선택">
-        <span class="sticker">.xls · .xlsx · .csv</span>
-        <svg class="tray" viewBox="0 0 96 70" aria-hidden="true"><rect x="4" y="18" width="88" height="48" rx="8" fill="#D7262F" stroke="#2B323B" stroke-width="3"/><rect x="18" y="4" width="60" height="36" rx="4" fill="#FFFBF2" stroke="#2B323B" stroke-width="3"/><path d="M28 16h40M28 26h28" stroke="#2B323B" stroke-width="3" stroke-linecap="round"/><path d="M4 40h26l6 8h24l6-8h26" fill="none" stroke="#2B323B" stroke-width="3" stroke-linejoin="round"/></svg>
-        <div class="display" id="dropTitle">여기에 엑셀을 끌어다 놓으세요</div>
-        <div class="muted small" style="margin-top:6px">또는 눌러서 파일 고르기</div>
-        <div class="muted small" style="margin-top:12px">KB국민은행 거래내역조회 엑셀 기준이고, 거래일시 · 출금액 · 입금액 열이 있으면 다른 은행 파일도 대부분 읽혀요.</div>
-        <input type="file" id="file" accept=".xls,.xlsx,.csv" class="hidden">
-      </div>
-      <div id="err" class="hidden"></div>
-    </div>
+    <div class="hint"><span>🔒 파일은 이 브라우저 안에서만 읽어요</span><span>KB국민은행 거래내역조회 엑셀 기준</span></div>
+    <div id="err" class="hidden"></div>
   </div>
 </header>
+
+<div id="intro">
+  <div class="checker"></div>
+  <section class="cream">
+    <div class="wrap">
+      <div class="sec-title"><h2>이렇게 보여요</h2></div>
+      <div class="steps">
+        <div class="card step"><span class="num">1</span><h3>넣기</h3><p>은행 앱이나 인터넷뱅킹에서 내려받은 거래내역 엑셀을 넣어요.</p>
+          <div class="ph"><div class="row"><span>거래내역.xls</span><span class="dash">—</span></div></div></div>
+        <div class="card step"><span class="num">2</span><h3>나눠 보기</h3><p>외식, 편의점, 구독처럼 어디에 얼마를 썼는지 나눠 보여 줘요.</p>
+          <div class="ph"><div class="row"><span>카테고리</span><div class="bar"><i style="width:0"></i></div><span class="dash">—원</span></div><div class="row"><span>카테고리</span><div class="bar"><i style="width:0"></i></div><span class="dash">—원</span></div></div></div>
+        <div class="card step"><span class="num">3</span><h3>아끼기</h3><p>줄일 비율을 정하거나 저금 도전을 골라, 한 달에 얼마를 아낄 수 있는지 봐요.</p>
+          <div class="ph"><div class="row"><span>한 달에 아낄 수 있는 돈</span><span class="dash">—원</span></div></div></div>
+      </div>
+      <div class="slots">
+        <div class="slot">후기 자리 — 실제 사용 후기가 생기면 여기에 넣어요.</div>
+        <div class="slot"><div>함께하는 곳 로고 자리<div class="logo-slots"><i></i><i></i><i></i></div></div></div>
+      </div>
+    </div>
+  </section>
+</div>
 
 <div id="app" class="hidden">
   <div class="checker"></div>
@@ -334,13 +345,13 @@ footer svg{height:30px;color:var(--color-cream);opacity:.9}
             <defs><clipPath id="jarClip"><path d="M48 62h104c12 0 20 9 20 21v118c0 16-12 27-28 27H56c-16 0-28-11-28-27V83c0-12 8-21 20-21z"/></clipPath></defs>
             <rect x="0" y="0" width="200" height="240" fill="none"/>
             <g clip-path="url(#jarClip)">
-              <rect x="20" y="0" width="160" height="240" fill="#FFFBF2"/>
-              <rect id="jarFill" x="20" y="228" width="160" height="0" fill="#F2B416"/>
+              <rect x="20" y="0" width="160" height="240" fill="var(--color-paper)"/>
+              <rect id="jarFill" x="20" y="228" width="160" height="0" fill="var(--color-mustard)"/>
             </g>
-            <path d="M48 62h104c12 0 20 9 20 21v118c0 16-12 27-28 27H56c-16 0-28-11-28-27V83c0-12 8-21 20-21z" fill="none" stroke="#2B323B" stroke-width="5"/>
-            <rect x="58" y="26" width="84" height="36" rx="8" fill="#D7262F" stroke="#2B323B" stroke-width="5"/>
-            <rect x="82" y="36" width="36" height="8" rx="4" fill="#2B323B"/>
-            <path d="M52 100v70" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" opacity=".7"/>
+            <path d="M48 62h104c12 0 20 9 20 21v118c0 16-12 27-28 27H56c-16 0-28-11-28-27V83c0-12 8-21 20-21z" fill="none" stroke="var(--color-ink)" stroke-width="5"/>
+            <rect x="58" y="26" width="84" height="36" rx="8" fill="var(--color-red)" stroke="var(--color-ink)" stroke-width="5"/>
+            <rect x="82" y="36" width="36" height="8" rx="4" fill="var(--color-ink)"/>
+            <path d="M52 100v70" stroke="var(--color-paper)" stroke-width="6" stroke-linecap="round" opacity=".7"/>
           </svg>
           <div class="jar-sum">
             <div class="l" id="jarLabel">도전을 고르면 저금통이 차요</div>
@@ -442,7 +453,6 @@ const $ = s=>document.querySelector(s);
 const drop = $('#drop'), fileIn = $('#file');
 drop.onclick = ()=>fileIn.click();
 drop.onkeydown = e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); fileIn.click(); } };
-$('#topUpload').onclick = ()=>fileIn.click();
 $('#floatUpload').onclick = ()=>fileIn.click();
 drop.ondragover = e=>{e.preventDefault();drop.classList.add('over')};
 drop.ondragleave = ()=>drop.classList.remove('over');
@@ -716,8 +726,8 @@ function loadRows(rows, fname){
   if(!TX.length){ showErr('거래 줄을 하나도 찾지 못했어요. 파일을 확인해 주세요.'); return; }
   sim.pct={}; sim.cut=new Set(); selCat=null; challenge.order=[]; challenge.joined=new Set(); challenge.open=new Set();
   $('#app').classList.remove('hidden');
-  $('#dropTitle').textContent='다른 파일을 넣으려면 여기에';
-  $('#topUpload').classList.add('hidden');
+  $('#dropTitle').textContent='다른 엑셀 넣기';
+  $('#intro').classList.add('hidden');
   renderAll();
   document.querySelectorAll('#kpis .badge').forEach((b,i)=>{ b.classList.remove('pop'); void b.offsetWidth; b.style.animationDelay=(i*70)+'ms'; b.classList.add('pop'); });
   $('#app').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
@@ -751,13 +761,13 @@ function renderKpis(){
   const ex = TX.filter(t=>t.cat==='제외').reduce((s,t)=>s+t.out,0);
   $('#period').textContent = (META.period? META.period+'  ' : '')+`(${D}일)`;
   const items=[
-    ['총 지출', won(total), 'burst', '#F2B416', -6],
-    ['하루 평균', won(total/D), 'circle', '#FFFBF2', 4],
-    ['한 달로 치면', won(total/D*30), 'square', '#E8692E', -3],
-    ['지출 건수', sp.length+'건', 'blob', '#9FC3D9', 7],
-    ['받은 돈', won(inn), 'circle', '#BFE3CF', -5],
+    ['총 지출', won(total), 'burst', 'var(--color-mustard)', -6],
+    ['하루 평균', won(total/D), 'circle', 'var(--color-paper)', 4],
+    ['한 달로 치면', won(total/D*30), 'square', 'var(--color-cream)', -3],
+    ['지출 건수', sp.length+'건', 'blob', 'var(--color-mint)', 7],
+    ['받은 돈', won(inn), 'circle', 'var(--color-cream)', -5],
   ];
-  if(ex) items.push(['제외한 금액', won(ex), 'square', '#E9E2D3', 3]);
+  if(ex) items.push(['제외한 금액', won(ex), 'square', 'var(--color-paper)', 3]);
   $('#kpis').innerHTML = items.map(([l,v,shape,bg,rot])=>`<div class="badge ${shape}" style="background:${bg};transform:rotate(${rot}deg)"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('');
 }
 
@@ -775,12 +785,12 @@ function renderCats(){
     const a2=a+Math.min(ang,Math.PI*2-1e-4), large=ang>Math.PI?1:0;
     const p=(rad,ang)=>[cx+rad*Math.cos(ang), cy+rad*Math.sin(ang)];
     const [x1,y1]=p(R,a),[x2,y2]=p(R,a2),[x3,y3]=p(r,a2),[x4,y4]=p(r,a);
-    paths+=`<path d="M${x1},${y1}A${R},${R} 0 ${large} 1 ${x2},${y2}L${x3},${y3}A${r},${r} 0 ${large} 0 ${x4},${y4}Z" fill="${CAT_COLOR[c.cat]}" stroke="#2B323B" stroke-width="2"><title>${c.cat} ${won(c.sum)}</title></path>`;
+    paths+=`<path d="M${x1},${y1}A${R},${R} 0 ${large} 1 ${x2},${y2}L${x3},${y3}A${r},${r} 0 ${large} 0 ${x4},${y4}Z" fill="${CAT_COLOR[c.cat]}" stroke="var(--color-ink)" stroke-width="2"><title>${c.cat} ${won(c.sum)}</title></path>`;
     a+=ang;
   }
   $('#donut').innerHTML=`<svg width="160" height="160" viewBox="0 0 160 160">${paths}
-    <text x="80" y="76" text-anchor="middle" font-size="11" fill="#6E6559">총 지출</text>
-    <text x="80" y="94" text-anchor="middle" font-size="16" fill="#2B323B" style="font-family:var(--display)">${Math.round(total/1000).toLocaleString()}천원</text></svg>`;
+    <text x="80" y="76" text-anchor="middle" font-size="11" fill="var(--color-sub)">총 지출</text>
+    <text x="80" y="94" text-anchor="middle" font-size="16" fill="var(--color-ink)" style="font-family:var(--display)">${Math.round(total/1000).toLocaleString()}천원</text></svg>`;
 }
 
 function renderTop(){
@@ -797,14 +807,14 @@ function renderDaily(){
   const W=Math.max(700, D*46), Ht=190, pad=34, bw=(W-pad-10)/D, max=Math.max(...arr.map(x=>x.v),1);
   const avg=arr.reduce((s,x)=>s+x.v,0)/D;
   let s=`<svg width="100%" viewBox="0 0 ${W} ${Ht+30}" preserveAspectRatio="xMinYMin meet">`;
-  for(const g of [0,.5,1]){ const y=10+(1-g)*Ht; s+=`<line x1="${pad}" x2="${W}" y1="${y}" y2="${y}" stroke="#eef0f3"/><text x="${pad-4}" y="${y+3}" text-anchor="end">${Math.round(max*g/1000)}천</text>`; }
+  for(const g of [0,.5,1]){ const y=10+(1-g)*Ht; s+=`<line x1="${pad}" x2="${W}" y1="${y}" y2="${y}" stroke="var(--color-line)"/><text x="${pad-4}" y="${y+3}" text-anchor="end">${Math.round(max*g/1000)}천</text>`; }
   arr.forEach((x,i)=>{
     const h=x.v/max*Ht, X=pad+i*bw+2, wk=x.d.getDay();
-    s+=`<rect x="${X}" y="${10+Ht-h}" width="${Math.max(bw-4,2)}" height="${h}" rx="4" fill="${x.v>avg*1.5?'#D7262F':'#2B323B'}"><title>${x.d.getMonth()+1}/${x.d.getDate()} ${won(x.v)}</title></rect>`;
-    if(D<=45 || i%2===0) s+=`<text x="${X+bw/2-2}" y="${Ht+24}" text-anchor="middle" style="${wk===0?'fill:#D7262F;font-weight:700':wk===6?'fill:#2B323B;font-weight:700':''}">${x.d.getMonth()+1}/${x.d.getDate()}</text>`;
+    s+=`<rect x="${X}" y="${10+Ht-h}" width="${Math.max(bw-4,2)}" height="${h}" rx="4" fill="${x.v>avg*1.5?'var(--color-red)':'var(--color-ink)'}"><title>${x.d.getMonth()+1}/${x.d.getDate()} ${won(x.v)}</title></rect>`;
+    if(D<=45 || i%2===0) s+=`<text x="${X+bw/2-2}" y="${Ht+24}" text-anchor="middle" style="${wk===0?'fill:var(--color-red);font-weight:700':wk===6?'fill:var(--color-ink);font-weight:700':''}">${x.d.getMonth()+1}/${x.d.getDate()}</text>`;
   });
   const ay=10+Ht-avg/max*Ht;
-  s+=`<line x1="${pad}" x2="${W}" y1="${ay}" y2="${ay}" stroke="#C98E00" stroke-width="2" stroke-dasharray="6 4"/><text x="${W-4}" y="${ay-6}" text-anchor="end" style="fill:#9A6C00;font-weight:700">하루 평균 ${won(avg)}</text></svg>`;
+  s+=`<line x1="${pad}" x2="${W}" y1="${ay}" y2="${ay}" stroke="var(--color-mustard)" stroke-width="2" stroke-dasharray="6 4"/><text x="${W-4}" y="${ay-6}" text-anchor="end" style="fill:var(--color-ink);font-weight:700">하루 평균 ${won(avg)}</text></svg>`;
   $('#daily').innerHTML=s+`<div class="muted small">빨간 막대는 하루 평균의 1.5배 넘게 쓴 날이에요.</div>`;
 }
 
@@ -855,16 +865,16 @@ function calcSim(){
   ].map(([l,v])=>`<div class="mini"><div class="l">${l}</div><div class="v">${v}</div></div>`).join('');
   const mx=before*m||1;
   $('#cmp').innerHTML=`<div class="small" style="opacity:.9">한 달 지출 비교 (추정)</div>
-    <div class="row"><div>지금</div><div class="track"><i style="width:100%;background:#FFF3DA"></i></div><div class="n">${won(before*m)}</div></div>
-    <div class="row"><div>줄이면</div><div class="track"><i style="width:${after*m/mx*100}%;background:#F2B416"></i></div><div class="n">${won(after*m)}</div></div>`;
+    <div class="row"><div>지금</div><div class="track"><i style="width:100%;background:var(--color-cream)"></i></div><div class="n">${won(before*m)}</div></div>
+    <div class="row"><div>줄이면</div><div class="track"><i style="width:${after*m/mx*100}%;background:var(--color-mustard)"></i></div><div class="n">${won(after*m)}</div></div>`;
 }
 
 
 // ---------------- 저금 도전 ----------------
 const ICONS={
-  food:'<svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="25" fill="#FFFBF2" stroke="#2B323B" stroke-width="3"/><path d="M20 15v12a4 4 0 0 0 8 0V15M24 15v26M36 15c-4 2-5 8-5 12h5v14" fill="none" stroke="#2B323B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  sub:'<svg viewBox="0 0 56 56"><rect x="4" y="10" width="48" height="32" rx="6" fill="#FFFBF2" stroke="#2B323B" stroke-width="3"/><path d="M24 19v14l11-7z" fill="#D7262F" stroke="#2B323B" stroke-width="2.5" stroke-linejoin="round"/><path d="M18 48h20" stroke="#2B323B" stroke-width="3" stroke-linecap="round"/></svg>',
-  day:'<svg viewBox="0 0 56 56"><rect x="6" y="10" width="44" height="40" rx="6" fill="#FFFBF2" stroke="#2B323B" stroke-width="3"/><path d="M6 21h44M18 6v8M38 6v8" stroke="#2B323B" stroke-width="3" stroke-linecap="round"/><circle cx="28" cy="35" r="8" fill="none" stroke="#D7262F" stroke-width="3"/><path d="M22 41l12-12" stroke="#D7262F" stroke-width="3"/></svg>',
+  food:'<svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="25" fill="var(--color-paper)" stroke="var(--color-ink)" stroke-width="3"/><path d="M20 15v12a4 4 0 0 0 8 0V15M24 15v26M36 15c-4 2-5 8-5 12h5v14" fill="none" stroke="var(--color-ink)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  sub:'<svg viewBox="0 0 56 56"><rect x="4" y="10" width="48" height="32" rx="6" fill="var(--color-paper)" stroke="var(--color-ink)" stroke-width="3"/><path d="M24 19v14l11-7z" fill="var(--color-red)" stroke="var(--color-ink)" stroke-width="2.5" stroke-linejoin="round"/><path d="M18 48h20" stroke="var(--color-ink)" stroke-width="3" stroke-linecap="round"/></svg>',
+  day:'<svg viewBox="0 0 56 56"><rect x="6" y="10" width="44" height="40" rx="6" fill="var(--color-paper)" stroke="var(--color-ink)" stroke-width="3"/><path d="M6 21h44M18 6v8M38 6v8" stroke="var(--color-ink)" stroke-width="3" stroke-linecap="round"/><circle cx="28" cy="35" r="8" fill="none" stroke="var(--color-red)" stroke-width="3"/><path d="M22 41l12-12" stroke="var(--color-red)" stroke-width="3"/></svg>',
 };
 const challenge={order:[], joined:new Set(), open:new Set()};
 function buildChallenges(){
@@ -874,7 +884,7 @@ function buildChallenges(){
   const food=sp.filter(t=>t.cat==='외식');
   if(food.length){
     const sum=food.reduce((s,t)=>s+t.out,0), per=sum/food.length, perWeek=food.length/D*7;
-    list.push({id:'food',icon:'food',color:'#F2B416',level:'보통',title:'외식, 한 주에 한 번만 줄이기',
+    list.push({id:'food',icon:'food',color:'var(--color-mustard)',level:'보통',title:'외식, 한 주에 한 번만 줄이기',
       basis:`이 기간 외식 ${food.length}번, 한 번에 평균 ${won(per)}을 썼어요.`,
       month:per*W,
       detail:[`일주일에 약 ${perWeek.toFixed(1)}번 외식했어요.`, `한 번(평균 ${won(per)})을 집밥으로 바꾸는 계산이에요.`, '한 달은 4.3주로 잡았어요.']});
@@ -883,7 +893,7 @@ function buildChallenges(){
   const subs=byWho(sp.filter(t=>t.cat==='구독·멤버십'));
   if(subs.length){
     const top=subs[0];
-    list.push({id:'sub',icon:'sub',color:'#9FC3D9',level:'쉬움',title:`구독 하나 정리하기: ${top.who}`,
+    list.push({id:'sub',icon:'sub',color:'var(--color-paper)',level:'쉬움',title:`구독 하나 정리하기: ${top.who}`,
       basis:`구독·멤버십 ${subs.length}곳 중 가장 큰 결제가 ${top.who} ${won(top.sum)}이에요.`,
       month:top.sum/Math.max(1,top.cnt),
       detail:[...subs.slice(0,4).map(x=>`${x.who}: ${won(x.sum)} (${x.cnt}번)`), '매달 같은 금액이 나간다고 가정했어요. 해지 전 결제일을 꼭 확인해 주세요.']});
@@ -894,7 +904,7 @@ function buildChallenges(){
   const vals=Object.values(byDay).sort((a,b)=>a-b);
   if(vals.length){
     const med=vals[Math.floor((vals.length-1)/2)], zero=D-vals.length;
-    list.push({id:'day',icon:'day',color:'#E8692E',level:'도전',title:'무지출 데이, 한 주에 하루 더',
+    list.push({id:'day',icon:'day',color:'var(--color-mint)',level:'도전',title:'무지출 데이, 한 주에 하루 더',
       basis:`${D}일 중 돈을 안 쓴 날은 ${zero}일이에요. 쓴 날은 보통 ${won(med)}을 썼어요.`,
       month:med*W,
       detail:[`'보통'은 돈을 쓴 날들의 가운데 값(중앙값)이에요. 큰 송금 하루에 끌려가지 않게 했어요.`, '매주 하루를 0원으로 보내는 계산이에요.', '한 달은 4.3주로 잡았어요.']});
